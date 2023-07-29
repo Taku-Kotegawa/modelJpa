@@ -82,6 +82,7 @@ public class Account extends AbstractEntity<String> implements Serializable, Sta
      */
     @ElementCollection(fetch = FetchType.EAGER)
     @Comment("ロール")
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_account_roles_01"))
     private List<Role> roles;
 
     /**

@@ -35,9 +35,8 @@ public class ManageEquip extends AbstractEntity<Long> implements Serializable {
     /**
      * 備品タイプ
      */
-    @Comment("備品タイプ")
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_manage_equip_01"))
+    @JoinColumn(name = "equip_type_id", foreignKey = @ForeignKey(name = "fk_manage_equip_01"))
     private EquipType equipType;
 
     /**
@@ -45,7 +44,7 @@ public class ManageEquip extends AbstractEntity<Long> implements Serializable {
      */
     @Comment("所有者(利用者)")
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_manage_equip_02"))
+    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "fk_manage_equip_02"))
     private Employee ownerId;
 
     /**

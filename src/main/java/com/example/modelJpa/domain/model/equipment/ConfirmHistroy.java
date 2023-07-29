@@ -45,7 +45,7 @@ public class ConfirmHistroy extends AbstractEntity<Long> implements Serializable
      * 確認者
      */
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_comfirmhistory_employee"))
+    @JoinColumn(name = "execute_by", foreignKey = @ForeignKey(name = "fk_confirm_history_01"))
     private Employee executeBy;
 
     /**

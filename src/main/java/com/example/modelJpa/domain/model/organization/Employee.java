@@ -1,10 +1,9 @@
 package com.example.modelJpa.domain.model.organization;
 
 import com.example.modelJpa.domain.model.AbstractEntity;
-import com.example.modelJpa.domain.model.StatusInterface;
 import com.example.modelJpa.domain.model.common.Status;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 import org.hibernate.annotations.Comment;
 
 import java.io.Serializable;
@@ -51,7 +50,7 @@ public class Employee extends AbstractEntity<Long> implements Serializable {
      */
     @Comment("所属部署")
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_employee_organization"))
+    @JoinColumn(name = "organization_id", foreignKey = @ForeignKey(name = "fk_employee_01"))
     private Organization organization;
 
     /**
@@ -59,7 +58,7 @@ public class Employee extends AbstractEntity<Long> implements Serializable {
      */
     @Comment("役職")
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_employee_position"))
+    @JoinColumn(name = "position_id", foreignKey = @ForeignKey(name = "fk_employee_02"))
     private Position position;
 
     /**
