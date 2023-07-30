@@ -32,8 +32,9 @@ public class ConfirmHistroy extends AbstractEntity<Long> implements Serializable
      * 備品ID
      */
     @Comment("備品ID")
-    @Column(nullable = false, updatable = false)
-    private Long equipId;
+    @ManyToOne
+    @JoinColumn(name = "equip_id", foreignKey = @ForeignKey(name = "fk_confirm_history_01"))
+    private ManageEquip equipId;
 
     /**
      * 確認日
@@ -45,7 +46,7 @@ public class ConfirmHistroy extends AbstractEntity<Long> implements Serializable
      * 確認者
      */
     @ManyToOne
-    @JoinColumn(name = "execute_by", foreignKey = @ForeignKey(name = "fk_confirm_history_01"))
+    @JoinColumn(name = "execute_by", foreignKey = @ForeignKey(name = "fk_confirm_history_02"))
     private Employee executeBy;
 
     /**
