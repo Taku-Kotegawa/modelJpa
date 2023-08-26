@@ -52,9 +52,9 @@ public class ConfirmHistroy extends AbstractEntity<Long> implements Serializable
     /**
      * 確認ステータス
      */
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CheckStatus checkStatus;
-
 
     @Override
     public Long getId() {

@@ -37,6 +37,7 @@ public class Position extends AbstractEntity<Long> implements Serializable {
      * ステータス
      */
     @Comment("ステータス")
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
 

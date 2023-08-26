@@ -48,7 +48,9 @@ public class Organization extends AbstractEntity<Long> implements Serializable {
      * ステータス
      */
     @Comment("ステータス")
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+//    @Column(nullable = false, columnDefinition = "varchar(255) default '0'")
     private Status status;
 
 

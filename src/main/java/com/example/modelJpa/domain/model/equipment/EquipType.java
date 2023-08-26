@@ -37,6 +37,7 @@ public class EquipType extends AbstractEntity<Long> implements Serializable {
      * ステータス
      */
     @Comment("ステータス")
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
 
