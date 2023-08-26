@@ -1,8 +1,5 @@
 package com.example.modelJpa.domain.model;
 
-/**
- * ステータス管理を行うエンティティ用のインターフェイス
- */
 public interface StatusInterface {
 
     /**
@@ -18,4 +15,5 @@ public interface StatusInterface {
      * @return ステータスのコード
      */
     String getStatus();
+
 }

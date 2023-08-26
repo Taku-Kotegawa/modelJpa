@@ -42,6 +42,19 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>7.4</version>
+			<!-- Use runtime scope if the project does not have any compile-time usage of logstash-logback-encoder,
+                 such as usage of StructuredArguments/Markers or implementations such as
+                 JsonProvider, AppenderListener, JsonFactoryDecorator, JsonGeneratorDecorator, etc
+            <scope>runtime</scope>
+            -->
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -97,6 +110,58 @@
 				</configuration>
 			</plugin>
 			<!-- Liquibase -->
+
+
+			<!-- @see https://qiita.com/charon/items/9946aababa76d586fe6c -->
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.4.1</version>
+				<dependencies>
+					<!-- オリジナルのカスタムプラグイン -->
+					<dependency>
+						<groupId>com.example</groupId>
+						<artifactId>mbg-plugins</artifactId>
+						<version>1.0</version>
+						<scope>system</scope>
+						<systemPath>${basedir}/src/main/resources/lib/mbg-plugins-1.0.jar</systemPath>
+					</dependency>
+				</dependencies>
+
+				<configuration>
+					<!-- デフォルトのコンフィグファイルを変更したい場合に修正
+                    <configurationFile>${project.basedir}/src/main/resources/generatorConfig.xml</configurationFile>
+                    -->
+					<overwrite>true</overwrite>
+					<!-- 全てのクラスを依存関係に追加する -->
+					<includeAllDependencies>true</includeAllDependencies>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>base</id>
+						<configuration>
+							<configurationFile>${project.basedir}/src/main/resources/generatorConfig.xml
+							</configurationFile>
+						</configuration>
+					</execution>
+					<execution>
+						<id>example</id>
+						<configuration>
+							<configurationFile>${project.basedir}/src/main/resources/generatorConfig_example.xml
+							</configurationFile>
+						</configuration>
+					</execution>
+					<execution>
+						<id>view</id>
+						<configuration>
+							<configurationFile>${project.basedir}/src/main/resources/generatorConfig.xml
+							</configurationFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 
 		</plugins>
 	</build>
