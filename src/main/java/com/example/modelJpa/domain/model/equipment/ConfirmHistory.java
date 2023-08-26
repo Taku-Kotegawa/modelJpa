@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Comment("棚卸し履歴")
 @Entity
 @Data
-public class ConfirmHistroy extends AbstractEntity<Long> implements Serializable {
+public class ConfirmHistory extends AbstractEntity<Long> implements Serializable {
 
 
     /**
