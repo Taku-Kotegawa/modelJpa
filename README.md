@@ -58,3 +58,66 @@ JPA(Hibernate)を使ったモデリング・DDL作成ツール
 ## 参考
 - https://github.com/dddjava/jig-tutorial
 - [SpringBootでEntity設計時に知りたいアノテーション](https://qiita.com/ughirose/items/5d691adc677aa08636b8)
+
+## かんたんなJPA
+
+### テーブル(エンティティクラス)
+```java
+@Comment("従業員")
+@Entity(name = "t_empoyee")
+public class Employee extends AbstractEntity<Long> { }
+```
+
+### 主キー
+```java
+@Comment("内部ID")
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY) //自動発番
+private Long id;
+```
+複合主キーは、@Idを複数設定する。
+
+### フィールド
+- NOT NULL の設定
+```java
+@Comment("都道府県")
+@Column(nullable = false)
+private Integer companyPrefecture;
+```
+
+- 自動で設定される属性を変更する。String -> varchar(255)
+```java
+@Comment("備考")
+@Column(columnDefinition = "TEXT")
+private String companyRemark;
+```
+
+- 複数の値を持つ場合
+```java
+@Comment("添付ファイル")
+@ElementCollection
+private List<String> companyFile;
+```
+
+- Enumを属性に設定
+```java
+@Comment("有効／無効")
+@Enumerated(EnumType.STRING)
+private ValidStatus invalidFlag;
+```
+
+- 1:nのリレーションを貼る
+```java
+@Comment("活動履歴")
+@OneToMany
+@JoinColumn(foreignKey = @ForeignKey(name="t_company_fkey01"))
+private List<Activity> activity;
+```
+- インデックスを追加する
+```java
+@Table(indexes = {@Index(columnList = "entityType, entityId, stepNo, employeeId", unique = true)})
+public class Workflow extends AbstractEntity<Long> implements Serializable {
+```
+
+### 設定方法がわかっていない事項
+- 別テーブルとOneToOne(1:1)のリレーションを設定すること
