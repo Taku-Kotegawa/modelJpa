@@ -1,169 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>modelJpa</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>modelJpa</name>
-	<description>Data Modeling by Hibernate(JPA)</description>
-	<properties>
-		<java.version>17</java.version>
-		<skipTests>true</skipTests>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-		</dependency>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.4</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.example</groupId>
+    <artifactId>modeljpa</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>modelJpa</name>
+    <description>Data Modeling by Hibernate(JPA)</description>
+    <properties>
+        <java.version>21</java.version>
+        <skipTests>true</skipTests>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-
-		<dependency>
-			<groupId>net.logstash.logback</groupId>
-			<artifactId>logstash-logback-encoder</artifactId>
-			<version>7.4</version>
-			<!-- Use runtime scope if the project does not have any compile-time usage of logstash-logback-encoder,
-                 such as usage of StructuredArguments/Markers or implementations such as
-                 JsonProvider, AppenderListener, JsonFactoryDecorator, JsonGeneratorDecorator, etc
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
-            -->
-		</dependency>
-
-	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-
-			<!-- ビルド時の自動テストを無効にする(Start) -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<skipTests>${skipTests}</skipTests>
-				</configuration>
-			</plugin>
-			<!-- ビルド時の自動テストを無効にする(End) -->
-
-			<!-- JIG Plugin -->
-			<plugin>
-				<groupId>com.github.irof</groupId>
-				<artifactId>jig-maven-plugin</artifactId>
-				<version>2023.6.3</version>
-				<configuration>
-					<domainPattern>.*</domainPattern>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>jig</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- JIG Plugin -->
-
-			<!-- Liquibase -->
-			<plugin>
-				<groupId>org.liquibase</groupId>
-				<artifactId>liquibase-maven-plugin</artifactId>
-				<configuration>
-					<propertyFile>src/main/resources/liquibase.properties</propertyFile>
-				</configuration>
-			</plugin>
-			<!-- Liquibase -->
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
 
 
-			<!-- @see https://qiita.com/charon/items/9946aababa76d586fe6c -->
-			<plugin>
-				<groupId>org.mybatis.generator</groupId>
-				<artifactId>mybatis-generator-maven-plugin</artifactId>
-				<version>1.4.1</version>
-				<dependencies>
-					<!-- オリジナルのカスタムプラグイン -->
-					<dependency>
-						<groupId>com.example</groupId>
-						<artifactId>mbg-plugins</artifactId>
-						<version>1.0</version>
-						<scope>system</scope>
-						<systemPath>${basedir}/src/main/resources/lib/mbg-plugins-1.0.jar</systemPath>
-					</dependency>
-				</dependencies>
+    </dependencies>
 
-				<configuration>
-					<!-- デフォルトのコンフィグファイルを変更したい場合に修正
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- ビルド時の自動テストを無効にする(Start) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <!-- ビルド時の自動テストを無効にする(End) -->
+
+            <!-- JIG Plugin -->
+            <plugin>
+                <groupId>com.github.irof</groupId>
+                <artifactId>jig-maven-plugin</artifactId>
+                <version>2024.3.1</version>
+                <configuration>
+                    <domainPattern>.*</domainPattern>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.logging.log4j</groupId>
+                        <artifactId>log4j-core</artifactId>
+                        <version>2.23.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <!-- JIG Plugin -->
+
+            <!-- Liquibase -->
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <configuration>
+                    <propertyFile>src/main/resources/liquibase.properties</propertyFile>
+                </configuration>
+            </plugin>
+            <!-- Liquibase -->
+
+            <!-- @see https://qiita.com/charon/items/9946aababa76d586fe6c -->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.4.2</version>
+                <dependencies>
+                    <!-- オリジナルのカスタムプラグイン -->
+                    <dependency>
+                        <groupId>com.example</groupId>
+                        <artifactId>mbg-plugins</artifactId>
+                        <version>1.1.20240321</version>
+                        <scope>system</scope>
+                        <systemPath>${basedir}/src/main/resources/lib/mbg-plugins-1.1.20240321.jar</systemPath>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                    <!-- デフォルトのコンフィグファイルを変更したい場合に修正
                     <configurationFile>${project.basedir}/src/main/resources/generatorConfig.xml</configurationFile>
                     -->
-					<overwrite>true</overwrite>
-					<!-- 全てのクラスを依存関係に追加する -->
-					<includeAllDependencies>true</includeAllDependencies>
-				</configuration>
+                    <overwrite>true</overwrite>
+                    <!-- 全てのクラスを依存関係に追加する -->
+                    <includeAllDependencies>true</includeAllDependencies>
+                </configuration>
 
-				<executions>
-					<execution>
-						<id>base</id>
-						<configuration>
-							<configurationFile>${project.basedir}/src/main/resources/generatorConfig.xml
-							</configurationFile>
-						</configuration>
-					</execution>
-					<execution>
-						<id>example</id>
-						<configuration>
-							<configurationFile>${project.basedir}/src/main/resources/generatorConfig_example.xml
-							</configurationFile>
-						</configuration>
-					</execution>
-					<execution>
-						<id>view</id>
-						<configuration>
-							<configurationFile>${project.basedir}/src/main/resources/generatorConfig.xml
-							</configurationFile>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+                <executions>
+                    <execution>
+                        <id>base</id>
+                        <configuration>
+                            <configurationFile>${project.basedir}/src/main/resources/generatorConfig.xml
+                            </configurationFile>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>example</id>
+                        <configuration>
+                            <configurationFile>${project.basedir}/src/main/resources/generatorConfig_example.xml
+                            </configurationFile>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>view</id>
+                        <configuration>
+                            <configurationFile>${project.basedir}/src/main/resources/generatorConfig.xml
+                            </configurationFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
 
-		</plugins>
-	</build>
+        </plugins>
+    </build>
 
 </project>
